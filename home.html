@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="home.css">
+    <title>ほーむ</title>
+</head>
+<body>
+    <header>
+        <h1>えいごクイズ</h1>
+    </header>
+    <nav>
+    <ul>
+        <li style="background-color: rgb(218, 112, 112);"><a href="ani_eigo.html">どうぶつえいごクイズ</a></li>
+        <li style="background-color: rgb(240, 179, 65);"><a href="tab_eigo.html">たべものえいごクイズ</a></li>
+        <li style="background-color: rgb(140, 223, 63);"><a href="mono_eigo.html">みのまわりのえいごクイズ</a></li>
+    </ul>
+    </nav>
+</body>
+<script>
+    // ページを更新するたびにランダムに画像を配置
+        var randomList = new Array(
+            "img/ame.png",
+            "img/ramen.png",
+            "img/tv.png",
+            "img/shopping.png" );
+        var num = Math.floor(Math.random() * randomList.length);
+        var printHtml = '<img src=' + randomList[num] + ' alt="ランダム画像" style="transform: scale(-1, 1);" >';//画像を反転して配置
+        document.write(printHtml);
+</script>
+</html>
+
