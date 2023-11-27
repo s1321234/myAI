@@ -1,0 +1,38 @@
+#https://fuji-pocketbook.net/chatgpt-api-python/
+!pip install openai==0.28
+
+import os
+
+import openai
+
+def main():
+    openai.api_key = "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"
+    amount_tokens = 0
+    chat = []
+
+    setting = input("ChatGPTに設定を加えますか？ y/n\n")
+    if setting == "y" or setting == "Y":
+       mbti = input("MBTIを入力してください。\n")
+       chat.append({"role": "system", "content": "あなたのMBTIは"+mbti+"です。"+mbti+"の性格を踏まえて会話をしてください。"})
+    print("チャットをはじめます。q または quit で終了します。")
+    print("-"*50)
+    while True:
+        user = input("<あなた>\n")
+        if user == "q" or user == "quit":
+            print(f"トークン数は{amount_tokens}でした。")
+            break
+        else:
+            chat.append({"role": "user", "content": user})
+
+        print("<ChatGPT>")
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo-1106",messages=chat
+        )
+        msg = response["choices"][0]["message"]["content"].lstrip()
+        amount_tokens += response["usage"]["total_tokens"]
+        print(msg)
+        chat.append({"role": "assistant", "content": msg})
+
+
+if __name__ == "__main__":
+    main()
