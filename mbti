@@ -6,7 +6,7 @@ import os
 import openai
 
 def main():
-    openai.api_key = "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"
+    openai.api_key = "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"
     amount_tokens = 0
     chat = []
 
