@@ -8,11 +8,7 @@ Original file is located at
 """
 
 # Commented out IPython magic to ensure Python compatibility.
-
-from datetime import datetime
-for i in range(5):
-    print(f'【{datetime.now()}】: Pythonで出力！')
-    
+  
 #初期設定（2023/07/24修正）
 !curl -sSfL https://raw.githubusercontent.com/VOICEVOX/voicevox_core/8cf307df4412dc0db0b03c6957b83b032770c31a/scripts/downloads/download.sh | bash -s
 # %cd voicevox_core/
