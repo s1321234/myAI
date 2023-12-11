@@ -1,0 +1,77 @@
+#https://fuji-pocketbook.net/chatgpt-api-python/
+!pip install openai==0.28
+
+import os
+
+import openai
+
+def main():
+    openai.api_key = "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"
+    amount_tokens = 0
+    chat = []
+
+    setting = input("ChatGPTに設定を加えますか？ y/n\n")
+    if setting == "y" or setting == "Y":
+       mbti = input("MBTIを入力してください。\n")
+       chat.append({"role": "system", "content": "あなたのMBTIは"+mbti+"です。"+mbti+"の性格を踏まえて会話をしてください。"})
+
+       zinbutu1 = input("人物の設定をしますか？　y/n\n")
+       if zinbutu1 == "y" or setting == "Y":
+            seibetu = input("性別を数字で入力してください。　1 男性　2 女性　3 その他\n")
+
+            if seibetu == "1":
+                    chat.append({"role": "system", "content": "あなたは男性です。男性として会話してください。"})
+
+            if seibetu == "2":
+                    chat.append({"role": "system", "content": "あなたは女性です。女性として会話してください。"})
+
+            if seibetu == "3":
+                    chat.append({"role": "system", "content": "あなたは性別不詳です。"})
+
+            ninshou = input("人物の一人称を入力してください。\n")
+            chat.append({"role": "system", "content": "あなたの一人称は" + ninshou + "です。会話中に一人称を使う場合は" + ninshou + "を用いてください。"})
+
+            nenrei = input("人物の年齢を数字で入力してください。 \n")
+            chat.append({"role": "system", "content": "あなたは" + nenrei + "歳の人物として会話してください。"})
+
+            kankei = input("chatとあなたとの関係を入力してください\n")
+            chat.append({"role": "system", "content": "あなたは相談者の"+ kankei + "です。" + kankei + "としてアドバイスをしてください。"})
+
+
+       kuchou1 = input("口調の設定をしますか？ y/n\n")
+       if kuchou1 == "y" or setting == "Y":
+            kuchou2 = input("設定するものの数字を入力してください。1 敬語　2 方言\n")
+
+            if kuchou2 == "1":
+                keigo = input("敬語を使用しますか？ y/n\n")
+                if keigo == "y" or setting == "Y":
+                    chat.append({"role": "system", "content": "あなたは絶対に敬語を使用して、必ず丁寧に会話してください。"})
+                if keigo == "n" or setting == "N":
+                    chat.append({"role": "system", "content": "あなたは絶対に敬語を使わず、必ずタメ口でフランクに会話してください。"})
+
+            if kuchou2 == "2":
+                hougen = input("使用したい方言を入力してください。\n")
+                chat.append({"role": "system", "content": "あなたは"+ hougen+"話者です。"+hougen+"を用いて会話をしてください。"})
+
+    print("チャットをはじめます。q または quit で終了します。")
+    print("-"*50)
+    while True:
+        user = input("<あなた>\n")
+        if user == "q" or user == "quit":
+            print(f"トークン数は{amount_tokens}でした。")
+            break
+        else:
+            chat.append({"role": "user", "content": user})
+
+        print("<ChatGPT>")
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo-1106",messages=chat
+        )
+        msg = response["choices"][0]["message"]["content"].lstrip()
+        amount_tokens += response["usage"]["total_tokens"]
+        print(msg)
+        chat.append({"role": "assistant", "content": msg})
+
+
+if __name__ == "__main__":
+    main()
